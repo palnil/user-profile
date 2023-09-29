@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 @Slf4j
