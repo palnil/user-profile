@@ -21,6 +21,11 @@ public class UserProfileController {
     @PostMapping("/submit")
     ResponseEntity<String> saveUserProfile(@RequestBody User user) {
 
+        if(user.getAge() < 18){
+
+            return new ResponseEntity<>("Minor User", HttpStatus.BAD_REQUEST);
+        }
+
        int id = userProfileService.createUserProfile(user);
        return new ResponseEntity<>("User Created " + id, HttpStatus.OK);
     }
