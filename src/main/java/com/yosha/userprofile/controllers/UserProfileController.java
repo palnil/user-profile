@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 @RestController
 @RequestMapping("/userprofile")
@@ -26,17 +27,19 @@ public class UserProfileController {
             return new ResponseEntity<>("Minor User", HttpStatus.BAD_REQUEST);
         }
 
-       int id = userProfileService.createUserProfile(user);
+       Long id = userProfileService.createUserProfile(user);
        return new ResponseEntity<>("User Created " + id, HttpStatus.OK);
     }
 
-    @GetMapping("/hi")
-    ResponseEntity<String> hello(){
-
-        HttpHeaders httpHeaders =  new HttpHeaders();
-        httpHeaders.add("Town", "Ashburn");
-
-        return new ResponseEntity<String>("Hello", httpHeaders, HttpStatus.OK);
+    @GetMapping("/user")
+    ResponseEntity<User> getUser(@RequestParam int id) {
+        User user = new User();
+        try {
+             user = userProfileService.getUser(id);
+        }catch (HttpServerErrorException e) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
 }
