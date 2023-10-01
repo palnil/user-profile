@@ -27,6 +27,7 @@ public class UserProfileController {
 
        Long id = userProfileService.createUserProfile(user);
        return new ResponseEntity<>("User Created " + id, HttpStatus.OK);
+      //  return new ResponseEntity<>("Error while creating user", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/user")
